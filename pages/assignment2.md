@@ -94,3 +94,7 @@ The reason for this is that when `repartition` is called, the data is reshuffled
 Note that the results differ between these two query plans, because the `repartition` query stems from rddA, which was created using `rddp4.values.map(x => x + 10)`, which returns an RDD of type [Int]. The `coalesce` query stems from rddB, which was created using `mapValues`, which in turn returns an RDD of type [(Int, Int)].
 
 We can conclude from this that `repartition` is best used when you want to balance data over a certain number of partitions, while `coalesce` is best used when you want to merge certain partitions, because it is more efficient.
+
+---
+
+[< Back to home](index.html)
