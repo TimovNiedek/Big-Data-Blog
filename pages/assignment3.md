@@ -58,8 +58,15 @@ These two tables are joined by the eventid into a table called `el`.
 
 The next dataset we will load is the `opendata_stadsgetallen.accdb` set. This set is first converted to csv format using the access2csv package. The set contains many statistics about the city's inhabitants. We join this table by quarter on the `el` table to analyse them. The resulting table has the columns
 
-| Waarde | WaardetypeNaam | ThemaNaam | OnderwerpNaam | Labelgroepnaam | LabelNaam | Wijk | TijdOmschrijving | EventId |
-|:------:|:--------------:|:---------:|:-------------:|:--------------:|:---------:|:----:|:----------------:|:-------:|
+* Waarde 
+* WaardetypeNaam 
+* ThemaNaam 
+* OnderwerpNaam 
+* Labelgroepnaam 
+* LabelNaam 
+* Wijk 
+* TijdOmschrijving 
+* EventId
 
 Now, we can perform analysis on this table. We want to analyse the age of people living near certain events. We do this by only selecting the rows where the `OnderwerpNaam = Geslacht en leeftijd`. Then, if we sort this table descending by `TijdOmschrijving`, we can see that the most recent data is from `1-1-2012`. We only select the data from this last year, in order to avoid duplicate data from older measurements. We are left with 4845 rows of data.
 
