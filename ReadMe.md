@@ -2,7 +2,7 @@
 
 This is Timo van Niedek's blog for the Big Data assignments of 2015-2016.
 
-View it [here](http://rubigdata.github.io/test-blog-TimovNiedek/).
+View it [here](https://timovniedek.github.io/Big-Data-Blog/).
 
 ---
 
