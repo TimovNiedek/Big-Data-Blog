@@ -9,3 +9,4 @@ In this blog I will describe my experiences when doing the assignments for the B
 
 - [Assignment 2](pages/assignment2.html)
 - [Assignment 3](pages/assignment3.html)
+- [Assignment 4: Assignment 4: Finding Profanities in the Commoncrawl Data](pages/assignment4.html)
