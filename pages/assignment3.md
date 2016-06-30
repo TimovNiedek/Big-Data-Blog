@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Big Data Blog
-description: Assignment 2
+description: Assignment 3
 ---
 
 In this blog post I will reflect on my experiences when analysing the open data sets of the city of Nijmegen.
