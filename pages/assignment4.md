@@ -175,7 +175,7 @@ The result is.. not unexpected. Many of the top 10 most profane domains seem to 
 		([ADULT CONTENT].com,782)
 	)
 
-I removed the domain names of the websites that clearly contain adult content; the uncensored list is included in a separate page, which can be found [here](pages/topprofanedomains.html)
+I removed the domain names of the websites that clearly contain adult content; the uncensored list is included in a separate page, which can be found [here](topprofanedomains.html)
 
 Forums.poz.com is a site for discussing HIV or AIDS - which scores high because the list of profanities contains the word "hiv". Beeradvocate.com is a site for enthusiasts and professionals discussing beer, which scores high because the list of profanities contains the word "beer". RxList is an index of all kinds of medicinal drugs. It seems that these sites are not really that bad, and score high because the subjects are apparently included in the list of profanities. Maybe we need a different, less strict list of profanities. 
 
@@ -198,7 +198,7 @@ The result is:
 		([ADULT CONTENT].com,0.1763247)
 	)
 
-Again, the unredacted list can be found [here](pages/topprofanedomains.html).
+Again, the unredacted list can be found [here](topprofanedomains.html).
 
 Now, almost all of the top websites by profanity-density contain adult content. For the highest scoring domain, an impressive 34.375% of the words are profanities.
 
