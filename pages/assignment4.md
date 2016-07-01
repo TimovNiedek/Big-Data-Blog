@@ -153,3 +153,58 @@ However, this time I got the `NullPointerException` (which was described above i
 	hdfs dfs -get /data/public/common-crawl/crawl-data/CC-MAIN-2016-07/segments/1454701165302.57/warc/CC-MAIN-20160205193925-00246-ip-10-236-182-209.ec2.internal.warc.gz /path/to/target
 
 I then copied the WARC file to the host from the `surfsara/hathi-client` container and copied it into the `andypetrella/spark-notebook` container (at this moment, docker does not support copying between containers). Then, I used this notebook to find the cause for the `NullPointerException`. The solution was, as described before, to remove entries that had no contentType.
+
+### Big Profanity Analysis
+
+First, let's see the profanity count of the domains in above WARC file, which was downloaded from the commoncrawl stored on the SurfSara cluster:
+
+	val top10Domains = profanitiesPerDomain.takeOrdered(10)(Ordering[Int].reverse.on(_._2)
+
+The result is.. not unexpected. Many of the top 10 most profane domains seem to have adult content:
+
+	res64: Array[(String, Int)] = Array(
+		([ADULT CONTENT].com,6390), 
+		([ADULT CONTENT].com,1544), 
+		(forums.poz.com,1314), 
+		([ADULT CONTENT].com,1210), 
+		([ADULT CONTENT].com,941), 
+		([ADULT CONTENT].com,895), 
+		(goodvibes.com,823), 
+		(beeradvocate.com,806), 
+		(rxlist.com,789), 
+		([ADULT CONTENT].com,782)
+	)
+
+I removed the domain names of the websites that clearly contain adult content; the uncensored list is included in a separate page, which can be found [here](pages/topprofanedomains.html)
+
+Forums.poz.com is a site for discussing HIV or AIDS - which scores high because the list of profanities contains the word "hiv". Beeradvocate.com is a site for enthusiasts and professionals discussing beer, which scores high because the list of profanities contains the word "beer". RxList is an index of all kinds of medicinal drugs. It seems that these sites are not really that bad, and score high because the subjects are apparently included in the list of profanities. Maybe we need a different, less strict list of profanities. 
+
+Alternatively, we can use the profanity-density to see how profane a website is:
+
+	val top10Density = profanityDensity.takeOrdered(10)(Ordering[Float].reverse.on(_._2))
+
+The result is:
+
+	top10Ratio: Array[(String, Float)] = Array(
+		([ADULT CONTENT].am,0.34375), 
+		([ADULT CONTENT].com,0.3219086), 
+		([ADULT CONTENT].com,0.23333333), 
+		(rxlist.com,0.21735537), 
+		([ADULT CONTENT].com,0.20490196), 
+		([ADULT CONTENT].com,0.18988392), 
+		([ADULT CONTENT].net,0.18181819), 
+		([ADULT CONTENT].com,0.18130311), 
+		([ADULT CONTENT].com,0.1764706), 
+		([ADULT CONTENT].com,0.1763247)
+	)
+
+Again, the unredacted list can be found [here](pages/topprofanedomains.html).
+
+Now, almost all of the top websites by profanity-density contain adult content. For the highest scoring domain, an impressive 34.375% of the words are profanities.
+
+### What's the point?
+
+A reader might wonder why I created this piece of software. The most obvious application is to create a filtering system, where only non-profane domains are allowed to be accessed. To do this, we can filter by profanity-density, removing all domains that score higher than a certain threshold such as 0.02 (only 2% of the words are profane). Maybe some other analysis might be interesting: one might wonder if the English are more profane than the Dutch (we would need a profanity list with Dutch words added to them).
+
+
+*At the time of writing, the Hathi Hadoop services of SurfSara are offline. I could not test my program for many WARC files. However, I am confident that it will work, since the program ran correctly on the WARC file that was downloaded earlier.* 
